@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DELVIZZ STUDIO | Моды и разработка для Radmir RP</title>
-    <link rel="icon" type="image/x-icon" href="studio_avatar_favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/CpZXW6tZ/delvizz-avatar.jpg">
     <style>
         :root {
             --color-dark: #0a0a0f;
@@ -197,6 +197,7 @@
             border: 3px solid var(--color-purple);
             box-shadow: 0 0 25px var(--color-purple-glow);
             animation: pulse 4s infinite alternate;
+            background: linear-gradient(45deg, #1a0b2e, #2d0b5a);
         }
 
         @keyframes pulse {
@@ -559,7 +560,7 @@
         <div class="container">
             <header>
                 <div class="logo-section">
-                    <img src="studio_avatar.jpg" alt="Аватар DELVIZZ STUDIO" class="avatar" id="studioAvatar">
+                    <img src="https://i.ibb.co/CpZXW6tZ/delvizz-avatar.jpg" alt="Аватар DELVIZZ STUDIO" class="avatar" id="studioAvatar">
                     <div class="studio-name">
                         <h1>DELVIZZ STUDIO</h1>
                         <p>Моды и разработка для Radmir RP</p>
@@ -886,41 +887,26 @@
             // Обработка аватарки
             const avatarImg = document.getElementById('studioAvatar');
             if (avatarImg) {
+                // Если изображение не загрузится, покажем логотип текстовый
                 avatarImg.onerror = function() {
-                    this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><rect width="80" height="80" rx="40" fill="%2348127a"/><text x="40" y="45" font-family="Arial" font-size="28" fill="white" text-anchor="middle" dominant-baseline="middle">DS</text></svg>';
-                    this.alt = 'Аватар не загружен';
+                    console.log('Аватарка не загрузилась, используем текстовый логотип');
+                    this.style.display = 'none';
+                    // Создаём текстовый логотип как fallback
+                    const logoFallback = document.createElement('div');
+                    logoFallback.className = 'avatar-fallback';
+                    logoFallback.innerHTML = 'DS';
+                    logoFallback.style.cssText = `
+                        width: 80px; height: 80px; border-radius: 50%; 
+                        background: linear-gradient(45deg, var(--color-purple), var(--color-purple-bright));
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 2rem; font-weight: bold; color: white;
+                        border: 3px solid var(--color-purple);
+                        box-shadow: 0 0 25px var(--color-purple-glow);
+                    `;
+                    this.parentNode.insertBefore(logoFallback, this);
                 };
             }
         });
-
-        // === Поддержка истории браузера ===
-        window.addEventListener('popstate', function(event) {
-            // Если в истории есть состояние, показываем соответствующую страницу
-            if (event.state && event.state.page) {
-                showPage(event.state.page);
-            } else {
-                showPage('main-page');
-            }
-        });
-
-        // Функция для обновления истории браузера
-        function updateHistory(pageId) {
-            const pageTitle = getPageTitle(pageId);
-            document.title = `${pageTitle} | DELVIZZ STUDIO`;
-            
-            history.pushState({ page: pageId }, pageTitle, `#${pageId}`);
-        }
-
-        // Функция для получения заголовка страницы
-        function getPageTitle(pageId) {
-            const titles = {
-                'main-page': 'Главная',
-                'mod-page': 'Приватный мод',
-                'developer-page': 'Услуги разработчика',
-                'payment-page': 'Оплата'
-            };
-            return titles[pageId] || 'DELVIZZ STUDIO';
-        }
     </script>
 </body>
 </html>
