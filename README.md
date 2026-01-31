@@ -1,2 +1,0 @@
-# DelvizzStudio
-site
